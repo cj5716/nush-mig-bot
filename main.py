@@ -189,7 +189,7 @@ async def set_new_type(update: Update, context: ContextTypes.DEFAULT_TYPE):
         'type': 'easy',
         'qn_link': 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
         'ans_link': 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-        'ans_text': ['69'],
+        'ans_text': '69',
         'announcement_text': 'Hello MIG!'
     }
 
@@ -212,7 +212,7 @@ async def announce_prev(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("Enter the link for the new question.")
         return NEW_QN_LINK
 
-    prev_answer = prev_problem['ans_text']
+    prev_answer = prev_problem['ans_text'].split("_")
     prev_category = type_identity[prev_problem['type']][CATEGORY]
     prev_points = type_identity[prev_problem['type']][POINTS]
     prev_category_string = 'pubs_answers' if prev_category == PUBS else 'training_answer'
@@ -267,7 +267,7 @@ async def set_new_ans_link(update: Update, context: ContextTypes.DEFAULT_TYPE):
     return NEW_ANS_TEXT
 
 async def set_new_ans_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    context.user_data["ans_text"] = list(update.message.text.split("_"))
+    context.user_data["ans_text"] = update.message.text
     await update.message.reply_text("Enter the text you want to send as the announcement. The format in which the announcement will be made is as follows: \n\n<message>\n\nPrevious Answer Link: <link>\nNew Question Link: <link>")
     return NEW_ANNOUNCEMENT_TEXT
 
